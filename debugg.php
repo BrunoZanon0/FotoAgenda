@@ -34,8 +34,3 @@ function dd(...$vars) {
     die();
 }
 ?>
-
-<!-- <style>
-    div{
-    }
-</style> -->

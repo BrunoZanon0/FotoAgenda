@@ -1,5 +1,8 @@
 <?php 
 session_start();
+
+$mensagem_erro = '';
+
 if(isset($_SESSION['erro'])){
     $mensagem_erro = $_SESSION['erro'];
     session_destroy();

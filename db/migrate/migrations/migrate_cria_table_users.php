@@ -28,7 +28,7 @@ class Migrate_cria_table_users {
         $sql_table = "CREATE TABLE $table_name (
             id INT PRIMARY KEY AUTO_INCREMENT,
             id_key INT,
-            permissao INT,
+            permissao VARCHAR(30),
             name VARCHAR(50),
             email VARCHAR(100),
             password VARCHAR(250),
