@@ -16,7 +16,8 @@ class Router {
         $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         $method = $_SERVER['REQUEST_METHOD'];
 
-        $basePath       = 'servicos/FotoAgendaDev/FotoAgenda';
+        $basePath       = 'FotoAgenda';
+        // $basePath       = 'servicos/FotoAgendaDev/FotoAgenda';
 
         $this->base_url = $basePath;
 
@@ -30,7 +31,8 @@ class Router {
             $this->callAction($action);
         } else {
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-            header("location: http://localhost:9090/servicos/FotoAgendaDev/fotoagenda/notfound.php");
+            // header("location: http://localhost:9090/servicos/FotoAgendaDev/fotoagenda/notfound.php");
+            header("location: http://localhost:8080/fotoagenda/notfound.php");
             die;
         }
     }

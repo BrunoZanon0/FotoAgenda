@@ -9,7 +9,7 @@ $router = new Router();
 $router->get('', 'home@index'); 
 $router->get('/', 'home@index'); 
 $router->get('login', 'home@index'); 
-$router->get('cadastro','cadastro@pagina');
+// $router->get('cadastro','cadastro@pagina');
 
 // POST -> rotas
 
