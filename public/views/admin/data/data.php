@@ -30,7 +30,7 @@
                 <?php include_once __DIR__ . "/../../../layouts/menu.php"; ?>
                 <div class="card-body">
                     <div class="w-100 justify-content-center align-items-center">
-                        <form id="myForm"  method="post" action="#" class=" p-3 mb-3 form-container mw-50 m-auto" >
+                        <form id="myForm"  method="post" action="cadastrardata" class=" p-3 mb-3 form-container mw-50 m-auto" >
                             <h6 class="text-center white">
                                 <button style="color: white;" type="button" class="btn btn-info">
                                     <i class="bi bi-calendar4"></i>  
@@ -39,18 +39,26 @@
                             </h6>
                             <br>
                             <div class="mb-3">
-                                <input class="form-control" value="<?= $data_convertida ?>" disabled type="text" name="data" id="data">
+                                <input required class="form-control" value="<?= $data_convertida ?>" disabled type="text" name="data" id="data">
                             </div>
 
                             <div class="mb-3">
-                                <input class="form-control" placeholder="Nome do evento"  type="text" name="nome" id="nome">
+                                <input required class="form-control" placeholder="Nome do evento"  type="text" name="nome" id="nome">
                             </div>
 
                             <div class="mb-3">
-                                <input class="form-control" placeholder="Descricao"  type="text" name="descricao" id="descricao">
+                                <input required class="form-control" placeholder="Email do cliente"  type="email" name="emailCliente" id="emailCliente">
+                            </div>
+
+                            <div class="mb-3">
+                                <input required class="form-control" placeholder="Numero de celular do cliente"  type="number" name="numeroCliente" id="numeroCliente">
+                            </div>
+
+                            <div class="mb-3">
+                                <input required class="form-control" placeholder="Descricao"  type="text" name="descricao" id="descricao">
                             </div>
                             <div class="mb-3">
-                                <input class="form-control" placeholder="Valor total" 																			
+                                <input required class="form-control" placeholder="Valor total" 																			
                                 onkeypress="return(moeda(this))"  
                                 type="text" 
                                 name="total" 
@@ -68,16 +76,16 @@
                                 <label class="form-check-label" for="id_checkbox_assinatura">Marque para o usuario assinar o contrato</label>
                             </div>
                             <div class="mb-3 d-none assinatura">
-                                <input type="text" placeholder="Nome do cliente que irá assinar o contrato!" name="nome_assinatura_cliente" class="form-control">
+                                <input required type="text" placeholder="Nome do cliente que irá assinar o contrato!" name="nome_assinatura_cliente" class="form-control">
                             </div>
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input required class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Default checkbox
+                                    Aceito os <a href="">Termos de uso</a>
                                 </label>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-success"><i class="bi bi-calendar-check-fill"></i>  Cadastrar</button>
+                                <button type="submit" class="btn btn-success"><i class="bi bi-calendar-check-fill"></i>  Cadastrar</button>
                             </div>
                         </form>
                     </div>

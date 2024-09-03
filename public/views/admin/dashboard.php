@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <form class="form_fake_data" method="post" action="dashboard/data">
+    <form class="form_fake_data" method="post" action="dashboarddata">
         <input class="input_data" type="hidden" name="data">
     </form>
 <script>

@@ -19,7 +19,8 @@ $router->post('login', 'login@logando');
 // AUTENTICADOS -> rotas // só entra se estiver logado do contrario volta para o home@index
 
 $router->get('dashboard','dashboard@render');
-$router->post('dashboard/data','dashboard@data');
+$router->post('dashboarddata','dashboard@data');
+$router->post('cadastrardata','dataCadastro@registraData');
 
 // SAIDAS E ZERAMENTO DA SESSION
 

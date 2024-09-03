@@ -30,7 +30,8 @@ class Router {
             $this->callAction($action);
         } else {
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-            header("location: http://localhost:9090/servicos/FotoAgendaDev/fotoagenda/notfound.php");
+            echo $this->routes[$method][$uri];
+            // header("location: http://localhost:9090/servicos/FotoAgendaDev/fotoagenda/notfound.php");
             die;
         }
     }
