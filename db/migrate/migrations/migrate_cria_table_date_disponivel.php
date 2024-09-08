@@ -18,7 +18,7 @@ class Migrate_cria_table_date {
     }
 
     public function cria_table() {
-        $table_name = 'agenda_data';
+        $table_name = 'data_disponivel';
 
         if ($this->tableExists($table_name)) {
             echo "A tabela '$table_name' já existe. Pulei a criação.\n";
@@ -27,17 +27,11 @@ class Migrate_cria_table_date {
 
         $sql_table = "CREATE TABLE $table_name (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(50),
-            user_id INT,                  
-            descricao TEXT,
-            data_evento DATE,
-            assinatura INT,
-            user_assinatura INT,
-            email VARCHAR(100),
-            pago INT,
-            valor_total VARCHAR(30),
-            entrada VARCHAR(30),
-            celular VARCHAR(30),
+            user_id INT,
+            status VARCHAR(30),
+            data_disponivel DATE,
+            hora_disponivel TIME NULL DEFAULT NULL,
+            user_id_cadastrado INT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             deleted_at TIMESTAMP NULL DEFAULT NULL,
             FOREIGN KEY (user_id) REFERENCES users(id)   

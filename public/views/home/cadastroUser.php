@@ -18,7 +18,7 @@ session_destroy();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foto Agenda</title>
+    <title>Foto Agenda Cadastro</title>
     <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfLuo0pAAAAAPEuodg_ib89N1-oHVP-9TMJFJhF"></script>
 
 </head>
@@ -41,7 +41,8 @@ session_destroy();
     }
 
     .container{
-        max-width: 30em;
+        max-width: 700px;
+
         width: 100%;
         position: absolute;
 
@@ -49,10 +50,7 @@ session_destroy();
         top: 50%;
 
         transform: translate(-50%,-50%);
-
-        border-radius: 20px 20px 40px 20px;
     }
-
     .imagem_background{
         width: 100%;
         height: 100%;
@@ -63,12 +61,18 @@ session_destroy();
     
 </style>
 <body>
-<div class="imagem_background">
+
+    <div class="imagem_background">
     </div>
     <div class="container card p-1">
             <div class="w-100 justify-content-center align-items-center">
-                <form id="myForm"  method="post" action="cadastrarFotografo" class=" p-3 mb-3 form-container" >
-                    <h6 class="font-weight-light text-center">Bem vind(a) Fotógrafo(a)</h6>
+                <form id="myForm"  method="post" action="cadastrarUsuario" class=" p-3 mb-3 form-container" >
+                    <div class="text-end">
+                        <a href="login" class="btn btn-dark"><i class="bi bi-arrow-left"></i></a>
+                    </div>
+                    <h4 class="font-weight-light text-center">Cadastrar</h4>
+                    <br>
+                    <h6 class="font-weight-light text-center">Bem vind(a) Cliente</h6>
                     <br>
                     <div class="mb-3">
                         <input class="form-control" placeholder="Digite seu email" type="email" name="email" id="login">
@@ -96,11 +100,8 @@ session_destroy();
                         <div style="text-align: center;">
                             <input type="submit" class="btn btn-success w-100" value="Entrar"><br><br>
                         </div>
-                    <br>
-                    <div>
-                        
-                    </div>
-                    <div class="text-end font-weight-light">
+
+                    <div class="text-center font-weight-light">
                         <h6>Criado por <a class="font-weight-light text-center" href="https://www.zanontech.com.br" target="_blank">zanontech</a></h6>
                     </div>
                 </form>

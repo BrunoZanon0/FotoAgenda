@@ -10,8 +10,8 @@
 <div class="star star5"></div>
 
 <div class="error">
-  <div class="error__title">404</div>
-  <div class="error__subtitle">Hmmm...</div>
+  <div class="error__title">404 </div>
+  <div class="error__subtitle">Hmmm...<a href="login">Voltar</a></div>
   <div class="error__description">Parece que você está<br> tentando acessar uma pagina inexistente!!!!</div>
 </div>
 

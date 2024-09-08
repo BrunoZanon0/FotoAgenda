@@ -5,6 +5,7 @@
         header("location: http://localhost:9090/servicos/FotoAgendaDev/FotoAgenda/");
         exit();
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +20,14 @@
 </head>
 <style>
     .form-container{
-        max-width: 40em;
+        max-width: 50em;
     }
 </style>
 <body>
     <div class="page-wrapper">
         <div class="page-content">
 					
-            <div class="card">
+            <div class="card protected_page">
                 <?php include_once __DIR__ . "/../../../layouts/menu.php"; ?>
                 <div class="card-body">
                     <div class="w-100 justify-content-center align-items-center">
@@ -37,11 +38,41 @@
                                     <?= $data_convertida ?>
                                 </button>
                             </h6>
+                            <?php if($datas_from_front && !empty($datas_from_front)):?>
+                                <div class="mb-3"
+                                    style="position: fixed; right:10px; bottom:10px">
+                                    <button type="button" class="btn btn-info botao_mostrar_compromissos" style="color:white">Todas os compromissos <i class="bi bi-box-arrow-in-down"></i></button>
+                                </div>
+                                <table class="w-100 tabela_dos_compromissos table table-info d-none">
+                                        <tr>
+                                            <th class="col">#</th>
+                                            <th class="col">Evento</th>
+                                            <th class="col">Descricao</th>
+                                            <th class="col">Cliente</th>
+                                            <th class="col">Total</th>
+                                            <th class="col">Entrada</th>
+                                            <th class="col">Pago?</th>
+                                        </tr>
+                                    <?php foreach($datas_from_front as $datas_info):?>
+                                        <tr>
+                                            <td scope="row"><?= $contador++; ?> </td>
+                                            <td scope="row"><?= $datas_info['name']?></td>
+                                            <td scope="row"><?= $datas_info['descricao']?></td>
+                                            <td scope="row"><?= $datas_info['email']?></td>
+                                            <td scope="row"><?= $datas_info['valor_total']?></td>
+                                            <td scope="row"><?= $datas_info['entrada']?></td>
+                                            <td scope="row"><?= $datas_info['pago'] == null? 'Não' : 'Sim' ?></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </table>
+                            <?php endif?>
                             <br>
                             <div class="mb-3">
-                                <input required class="form-control" value="<?= $data_convertida ?>" disabled type="text" name="data" id="data">
+                                <input required class="form-control" value="<?= $data_convertida ?>" disabled type="text">
                             </div>
-
+                            <div class="mb-3">
+                                <input type="hidden" name="data_evento" value="<?= $data_convertida ?>">
+                            </div>
                             <div class="mb-3">
                                 <input required class="form-control" placeholder="Nome do evento"  type="text" name="nome" id="nome">
                             </div>
@@ -52,6 +83,10 @@
 
                             <div class="mb-3">
                                 <input required class="form-control" placeholder="Numero de celular do cliente"  type="number" name="numeroCliente" id="numeroCliente">
+                            </div>
+
+                            <div class="mb-3">
+                                <input required class="form-control" placeholder="Hora do evento"  type="time" name="hora" id="hora">
                             </div>
 
                             <div class="mb-3">
@@ -68,8 +103,8 @@
                                 <input class="form-control" placeholder="Valor Entrada, caso nao tenho, deixar em branco" 																			
                                 onkeypress="return(moeda(this))"  
                                 type="text" 
-                                name="total" 
-                                id="total">
+                                name="valor_entrada" 
+                                id="valor_entrada">
                             </div>
                             <div class="form-check form-switch mb-3">
                                 <input class="form-check-input" type="checkbox" role="switch" id="id_checkbox_assinatura">
@@ -96,20 +131,19 @@
 </body>
 
 <script>
-    function moeda(campo) {
-        let valor = campo.value.replace(/\D/g, '');
-
-        if (valor.length > 2) {
-            valor = valor.replace(/(\d)(\d{1})$/, '$1,$2'); 
-            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
-        } else {
-            valor = valor.replace(/(\d{1,2})$/, '$1'); 
-        }
-
-        campo.value = valor ? `${valor}` : '';
-    }
 
     $(document).ready(function() {
+        $('.botao_mostrar_compromissos').on('click',function(){
+            let tabela = $('.tabela_dos_compromissos');
+
+            tabela.toggleClass('d-none');
+
+            if (tabela.hasClass('d-none')) {
+                $(this).html('Todas os compromissos <i class="bi bi-box-arrow-in-down"></i>');
+            } else {
+                $(this).html('Ocultar compromissos <i class="bi bi-box-arrow-in-up"></i>');
+            }
+        })
             $('#id_checkbox_assinatura').on('change', function() {
                 if ($(this).is(':checked')) {
                     $('.assinatura').removeClass('d-none').addClass('d-block');

@@ -337,3 +337,29 @@ function aes_decrypt($key, $data) {
 
     return $resultHex;
 }
+
+?>
+
+<!--  LOADING AJAX -->
+
+<script>
+
+    function moeda(campo) {
+        let valor = campo.value.replace(/\D/g, '');
+
+        if (valor.length > 2) {
+            valor = valor.replace(/(\d)(\d{1})$/, '$1,$2'); 
+            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+        } else {
+            valor = valor.replace(/(\d{1,2})$/, '$1'); 
+        }
+
+        campo.value = valor ? `${valor}` : '';
+    }
+
+    function formatDateToBR(dateStr) {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+        const [year, month, day] = dateStr.split('-');
+        return `${day}/${month}/${year}`;
+    }
+</script>

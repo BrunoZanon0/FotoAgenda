@@ -3,9 +3,10 @@
 class Router {
     protected $routes = [];
     public $base_url;
+    public $method;
 
     public function get($uri, $action) {
-        $this->routes['GET'][$uri] = $action;
+        $this->routes['GET'][$uri]  = $action;
     }
 
     public function post($uri, $action) {
@@ -16,7 +17,7 @@ class Router {
         $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         $method = $_SERVER['REQUEST_METHOD'];
 
-        $basePath       = 'servicos/FotoAgendaDev/FotoAgenda';
+        $basePath       = 'servicos/FotoAgendaDev/Fotoagenda';
 
         $this->base_url = $basePath;
 
@@ -27,7 +28,7 @@ class Router {
 
         if (isset($this->routes[$method][$uri])) {
             $action = $this->routes[$method][$uri];
-            $this->callAction($action);
+            $this->chamaAcao($action);
         } else {
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
             echo $this->routes[$method][$uri];
@@ -36,33 +37,33 @@ class Router {
         }
     }
 
-    protected function callAction($action) {
+    protected function chamaAcao($action) {
         list($controller, $method) = explode('@', $action);
 
-        $controllerClass = ucfirst($controller) . 'Controller';
-        $controllerFile = __DIR__ . '/../app/controller/' . $controllerClass . '.php';
-
-        if (file_exists($controllerFile)) {
-            require_once $controllerFile;
-        } else {
-            header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-            header("location: notfound.php");
-            die;
-        }
-
-        if (class_exists($controllerClass)) {
-            $controllerInstance = new $controllerClass();
-            if (method_exists($controllerInstance, $method)) {
-                $controllerInstance->$method();
+            $controllerClass = ucfirst($controller) . 'Controller';
+            $controllerFile = __DIR__ . '/../app/controller/' . $controllerClass . '.php';
+    
+            if (file_exists($controllerFile)) {
+                require_once $controllerFile;
             } else {
                 header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-                echo "404 Method Not Found";
+                // header("location: notfound.php");
                 die;
             }
-        } else {
-            header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-            echo "404 Controller Not Found";
-            die;
-        }
+    
+            if (class_exists($controllerClass)) {
+                $controllerInstance = new $controllerClass();
+                if (method_exists($controllerInstance, $method)) {
+                    $controllerInstance->$method();
+                } else {
+                    header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+                    echo "404 Method Not Found";
+                    die;
+                }
+            } else {
+                header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+                echo "404 Controller Not Found";
+                die;
+            }
     }
 }

@@ -32,6 +32,7 @@ class Migrate_cria_table_users {
             name VARCHAR(50),
             email VARCHAR(100),
             password VARCHAR(250),
+            cpf VARCHAR(30),
             token VARCHAR(30),
             fotografo INT,
             verificacao_two_fac INT,
