@@ -22,7 +22,7 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link active" aria-current="page" href="montarAgenda"><i class="bi bi-calendar-plus"></i> Montar Agenda</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link active" aria-current="page" href=""><i class="bi bi-person-add"></i>  Perfil</a>
+                    <li class="nav-item"> <a class="nav-link active" aria-current="page" href="configuracao"><i class="bi bi-person-add"></i> Configuração</a>
                     </li>
                     <li class="nav-item dropdown"> 
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

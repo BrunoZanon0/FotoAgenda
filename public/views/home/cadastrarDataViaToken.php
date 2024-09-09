@@ -23,6 +23,12 @@ $auth = $busca_user->Auth();
 ?>
 
 
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script>
+    const mp = new MercadoPago("TEST-c80d6330-0600-4afb-91b4-1c37d1496c51");
+  </script>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -142,8 +148,6 @@ $auth = $busca_user->Auth();
                         </div>
                     </div>
                     <div class="mb-3 horarios_select">
-
-
                     </div>
                 </div>
                 <div class="mb-3">
@@ -153,11 +157,25 @@ $auth = $busca_user->Auth();
                     <input class="form-control" placeholder="Entrada?" onkeypress="return(moeda(this))" type="text" name="valor_entrada" id="valor_entrada">
                 </div>
                 <div class="mb-3">
+                    <input class="form-control card_number"  required placeholder="Card Number" type="text" name="card_number" id="card_number">
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <input class="form-control"required placeholder="Data EX: 08/27" type="month" name="card_data" id="card_data">
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" required placeholder="Código EX: 123" maxlength="3" type="text" name="card_cod" id="card_cod">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
                     <input type="checkbox" name="valor_entrada" id="aceite">
                     <label for="aceite">Aceita todos os termos de transição</label>
                 </div>
                 <input type="hidden" name="recaptcha_token" id="recaptchaToken">
                 <div class="g-recaptcha" data-sitekey="6LecXpIpAAAAAKZboCU3lqj-nU2O-AcZ2-GrVxcZ" data-action="login" required></div>
+                <br>
                 <div class="text-center">
                     <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
                     <button type="button" class="btn btn-success btn_enviar">Enviar</button>
@@ -187,7 +205,18 @@ $auth = $busca_user->Auth();
         $('.btn_enviar').on('click',function(){
             let inputs = $('.valida');
             let valida = true;
+            let horarios = $('input[name=data_escolhida]')
 
+            if(!horarios.length){
+                Swal.fire('Erro','É necessário selecionar os horarios');
+                return;
+            }
+
+            if(!horarios.is(':checked')){
+                Swal.fire("Erro",'Algum horário deverá ser marcado!','error');
+                return;
+            }
+            
             inputs.each(function(index, element) {
                 let $element = $(element);
                 
@@ -198,10 +227,12 @@ $auth = $busca_user->Auth();
 
                 return valida;
             });
+
+
             
-            if(valida){
-                document.querySelector('#myForm').submit();
-            }
+            // if(valida){
+            //     document.querySelector('#myForm').submit();
+            // }
         })
 
         $('.select_evento').on('change',function(){
@@ -248,6 +279,24 @@ $auth = $busca_user->Auth();
                     }
             })
         })
+
+        function card_model(event) {
+            const input = event.target; 
+            let value = input.value.replace(/\D/g, '');
+
+            if (value.length > 16) {
+                value = value.slice(0, 16);
+            }
+
+            value = value.replace(/(.{4})/g, '$1 ').trim();
+
+            input.value = value;
+
+            const key = event.which || event.keyCode;
+            return (key >= 48 && key <= 57) || key === 32;
+        }
+
+        document.getElementById('card_number').addEventListener('input', card_model);
     });
 
     let currentStep = 0;

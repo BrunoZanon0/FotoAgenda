@@ -1,10 +1,21 @@
 <?php 
     if(!isset($auth) || empty($auth)){
-        session_start();
         $_SESSION['erro'] = "Você não está logado!";
-        header("location: http://localhost:9090/servicos/FotoAgendaDev/FotoAgenda/");
+        header("location: login");
         exit();
     }
+
+    $mensagem_erro      = '';
+    $mensagem_success   = '';
+    if(isset($_SESSION['erro'])){
+        $mensagem_erro = $_SESSION['erro'];
+        unset($_SESSION['erro']);
+    }
+    if(isset($_SESSION['success'])){
+        $mensagem_success = $_SESSION['success'];
+        unset($_SESSION['success']);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -79,59 +90,31 @@
                 <?php include_once __DIR__ . "/../../../layouts/menu.php"; ?>
                 <div class="card-body">
                 <div class="row">
-					<div class="col-12 col-lg-3">
-						<div class="card">
-							<div class="card-body">
-								<div class="d-grid"> <button class="btn btn-primary btn_modal_agenda">Montagem</button>
-								</div>
-								<h5 class="my-3">Menu</h5>
-								<div class="fm-menu">
-									<div class="list-group list-group-flush"> 
-										<button class="list-group-item py-1" style="text-align: left;"><i class="bx bx-beer me-2"></i><span>Zip Files</span></button>
-										<button class="list-group-item py-1" style="text-align: left;"><i class="bx bx-beer me-2"></i><span>Zip Files</span></button>
-										<button class="list-group-item py-1" style="text-align: left;"><i class="bx bx-beer me-2"></i><span>Zip Files</span></button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-lg-9">
+					<div class="col-12 col-lg-12">
 						<div class="card">
 							<div class="card-body">
 								<div class="row mt-3">
-									<div class="col-12 col-lg-4">
+									<div class="col-12 col-lg-4 credenciais">
 										<div class="card shadow-none border radius-15">
-											<div class="card-body">
-												<h5 class="mt-3 mb-0">Clientes</h5>
-												<p class="mb-1 mt-4"><span>35</span>  <span class="float-end">50/ Mês</span>
-												</p>
-												<div class="progress h-7">
-													<div class="progress-bar bg-primary w-50" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
+											<div class="card-body text-center">
+                                                <h2><i class="bi bi-cart-check"></i></h2>
+                                                <h4>Credenciais</h4>
 											</div>
 										</div>
 									</div>
 									<div class="col-12 col-lg-4">
 										<div class="card shadow-none border radius-15">
-											<div class="card-body">
-												<h5 class="mt-3 mb-0">Ensaios</h5>
-												<p class="mb-1 mt-4"><span>45</span>  <span class="float-end">60 / Mês</span>
-												</p>
-												<div class="progress h-7">
-													<div class="progress-bar bg-danger w-50" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
+											<div class="card-body text-center">
+                                                <h2><i class="bi bi-check2-all"></i></h2>
+												<h4>Autenticação</h4>
 											</div>
 										</div>
 									</div>
 									<div class="col-12 col-lg-4">
 										<div class="card shadow-none border radius-15">
-											<div class="card-body">
-												<h5 class="mt-3 mb-0">Financeiro</h5>
-												<p class="mb-1 mt-4"><span>R$ 6.451,20</span>  <span class="float-end">R$ 10.000,00 / Mês</span>
-												</p>
-												<div class="progress h-7">
-													<div class="progress-bar bg-success w-50" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
+											<div class="card-body text-center">
+                                                <h2><i class="bi bi-person-circle"></i></h2>
+                                                <h4>Perfil</h4>
 											</div>
 										</div>
 									</div>
@@ -174,12 +157,19 @@
             </div>
         </div>
     </div>
-    <?php include_once __DIR__ . "/../modal/modal-datas-config.php"; ?>
+    <?php include_once __DIR__ . "/../modal/modal-credenciais-pagamento.php"; ?>
 </body>
 </html>
 
 <script>
-        $(document).on("click", ".btn_modal_agenda", function(e){
-            $(document).trigger("start_modal_valida_datas");
-        });
+
+    if(<?= json_encode($mensagem_erro)?>){
+        Swal.fire('Erro','<?= $mensagem_erro?>','error');
+    }
+    if(<?= json_encode($mensagem_success)?>){
+        Swal.fire("Sucess",'<?= $mensagem_success ?>' ,'success')
+    }
+    $(document).on("click", ".credenciais", function(e){
+        $(document).trigger("start_modal_credenciais");
+    });
 </script>

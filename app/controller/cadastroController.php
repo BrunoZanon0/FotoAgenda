@@ -52,16 +52,19 @@ class CadastroController{
 
             if(!$exist_email){
                 $senha          = $this->valida_dados_front($_POST['senha']);
-                $celular        = $this->valida_dados_front($_POST['celular']);
+                $celular_front  = $this->valida_dados_front($_POST['celular']);
                 $nome           = $this->valida_dados_front($_POST['nome']);
                 $nomefantasia   = $this->valida_dados_front($_POST['nomefantasia']);
+                $cpf_front      = $this->valida_dados_front($_POST['cpf']);
 
 
-                if (!$senha || !$celular || !$nome || !$nomefantasia || !$email) {
+                if (!$senha || !$celular_front || !$nome || !$nomefantasia || !$email || !$cpf_front) {
                     $this->retorna_front_msg("Algum campo veio sem estar preenchido!", 'erro');
                     die;
                 }
 
+                $cpf            = encrypt($cpf_front,'zanontech2024');
+                $celular        = encrypt($celular_front,'zanontech2024');
                 $table          = 'users';
                 $idkey          = '2';
                 $permissao      = 'fotografo';
@@ -71,8 +74,8 @@ class CadastroController{
                 $senha_encrypt  = password_hash($senha, PASSWORD_DEFAULT);
     
     
-                $sql_pdo = "INSERT INTO $table (id_key,permissao,name,email,password,token,fotografo,celular)
-                            VALUES(?,?,?,?,?,?,?,?)";
+                $sql_pdo = "INSERT INTO $table (id_key,permissao,name,email,password,cpf,token,fotografo,celular)
+                            VALUES(?,?,?,?,?,?,?,?,?)";
                 $stmt    = $this->conn->prepare($sql_pdo);
     
                 $stmt->bindParam(1,$idkey,PDO::PARAM_INT);
@@ -80,10 +83,10 @@ class CadastroController{
                 $stmt->bindParam(3,$nome,PDO::PARAM_STR);
                 $stmt->bindParam(4,$email,PDO::PARAM_STR);
                 $stmt->bindParam(5,$senha_encrypt,PDO::PARAM_STR);
-                $stmt->bindParam(6,$token,PDO::PARAM_STR);
-                $stmt->bindParam(7,$fotografo,PDO::PARAM_STR);
-                $stmt->bindParam(7,$fotografo,PDO::PARAM_STR);
-                $stmt->bindParam(8,$celular,PDO::PARAM_STR);
+                $stmt->bindParam(6,$cpf,PDO::PARAM_STR);
+                $stmt->bindParam(7,$token,PDO::PARAM_STR);
+                $stmt->bindParam(8,$fotografo,PDO::PARAM_STR);
+                $stmt->bindParam(9,$celular,PDO::PARAM_STR);
     
                 if($stmt->execute()){
                     $this->retorna_front_msg('Email cadastrado com sucesso','success');

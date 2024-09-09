@@ -83,6 +83,9 @@ session_destroy();
                         <input class="form-control" placeholder="Celular ex: 21 9 1234 5678" type="number" name="celular" id="celular">
                     </div>
                     <div class="mb-3">
+                        <input class="form-control" placeholder="CPF" type="number" name="cpf" id="cpf">
+                    </div>
+                    <div class="mb-3">
                         <input class="form-control" placeholder="Nome pessoal completo" type="text" name="nome" id="nome">
                     </div>
                     <div class="mb-3">

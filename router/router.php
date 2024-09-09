@@ -28,11 +28,12 @@ $router->post('login', 'login@logando');
 $router->get('dashboard','dashboard@render');
 $router->post('dashboarddata','dashboard@data');
 $router->post('cadastrardata','dataCadastro@registraData');
+$router->get('configuracao','configuracao@render');
+$router->post('atualizaChaveApi','configuracao@atualizaChaveApi');
 
 // PAGINA DE ERRO PADRAO
 
 $router->get('notfound','notfound@exit');
-
 
 // SAIDAS E ZERAMENTO DA SESSION
 

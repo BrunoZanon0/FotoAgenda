@@ -338,6 +338,47 @@ function aes_decrypt($key, $data) {
     return $resultHex;
 }
 
+function encrypt($data, $key) {
+      
+    if (strlen($key) < 32) {
+        $key = str_pad($key, 32, '0'); 
+    } elseif (strlen($key) > 32) {
+        $key = substr($key, 0, 32); 
+    }
+
+    $iv = openssl_random_pseudo_bytes(16);
+    $encrypted = openssl_encrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+
+    if ($encrypted === false) {
+        throw new Exception('Erro ao criptografar o dado.');
+    }
+
+    return base64_encode($iv . $encrypted);
+}
+
+function decrypt($data, $key) {
+    if (strlen($key) < 32) {
+        $key = str_pad($key, 32, '0'); 
+    } elseif (strlen($key) > 32) {
+        $key = substr($key, 0, 32); 
+    }
+
+    $data = base64_decode($data);
+    if ($data === false) {
+        throw new Exception('Erro ao decodificar o dado.');
+    }
+
+    $iv = substr($data, 0, 16); 
+    $encrypted = substr($data, 16); 
+    $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+
+    if ($decrypted === false) {
+        throw new Exception('Erro ao descriptografar o dado.');
+    }
+
+    return $decrypted;
+}
+
 ?>
 
 <!--  LOADING AJAX -->
