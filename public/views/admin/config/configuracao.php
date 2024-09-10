@@ -102,7 +102,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-12 col-lg-4">
+									<div class="col-12 col-lg-4 autenticacao_tow_fac">
 										<div class="card shadow-none border radius-15">
 											<div class="card-body text-center">
                                                 <h2><i class="bi bi-check2-all"></i></h2>
@@ -158,17 +158,22 @@
         </div>
     </div>
     <?php include_once __DIR__ . "/../modal/modal-credenciais-pagamento.php"; ?>
+    <?php include_once __DIR__ . "/../modal/modal-autenticacao-email.php"; ?>
 </body>
 </html>
 
 <script>
-
     if(<?= json_encode($mensagem_erro)?>){
         Swal.fire('Erro','<?= $mensagem_erro?>','error');
     }
     if(<?= json_encode($mensagem_success)?>){
         Swal.fire("Sucess",'<?= $mensagem_success ?>' ,'success')
     }
+
+    $(document).on("click",".autenticacao_tow_fac", function(e){
+        $(document).trigger("start_modal_autenticacao");
+    })
+
     $(document).on("click", ".credenciais", function(e){
         $(document).trigger("start_modal_credenciais");
     });

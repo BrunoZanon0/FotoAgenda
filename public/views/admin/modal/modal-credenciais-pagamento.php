@@ -84,10 +84,10 @@
 
 <script>
 
-    const target_modal      = $("#modal_mostra_data");
-    const botao_return      = $('.botao_retorno');
-    const botao_finalizar   = $('.botao_finalizar');
-    const id_usuario        = '<?= $auth['id']; ?>'
+    target_modal      = $("#modal_mostra_data");
+    botao_return      = $('.botao_retorno');
+    botao_finalizar   = $('.botao_finalizar');
+    id_usuario        = '<?= $auth['id']; ?>'
 
     $('.close_modal_agenda').on('click',function(){
         target_modal.modal("hide");
