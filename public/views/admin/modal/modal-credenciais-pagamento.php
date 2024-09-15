@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal_mostra_data" role="dialog" aria-labelledby="modal_mostra_dataLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="modal_mostra_credenciais" role="dialog" aria-labelledby="modal_mostra_credenciaisLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales/pt-br.js'></script>
@@ -15,7 +15,7 @@
     <form action="atualizaChaveApi" class="formulario_credenciais" method="POST">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal_mostra_dataLabel">
+            <h5 class="modal-title" id="modal_mostra_credenciaisLabel">
 
                 <button type="button" class="btn btn-dark botao_retorno d-none">
                     <i class="bi bi-arrow-left"></i>
@@ -83,21 +83,16 @@
 </div>
 
 <script>
-
-    target_modal      = $("#modal_mostra_data");
-    botao_return      = $('.botao_retorno');
-    botao_finalizar   = $('.botao_finalizar');
-    id_usuario        = '<?= $auth['id']; ?>'
-
+  
     $('.close_modal_agenda').on('click',function(){
-        target_modal.modal("hide");
+        $("#modal_mostra_credenciais").modal("hide");
     })
 
-    
-    botao_finalizar.on('click',function(){
+    $('.botao_finalizar').on('click',function(){
         let token_access        = $('.token_api_access');
         let token_public        = $('.token_api_public');
         let formulario          = $('.formulario_credenciais');
+
 
         if(!token_access.val()){
             Swal.fire('Erro','Token de acesso não idenficado!','error');
@@ -128,8 +123,8 @@
     })
 
     $(document).on("start_modal_credenciais", function(){
-        target_modal.modal("show");
-
+        $("#modal_mostra_credenciais").modal("show");
+        let id_usuario        = '<?= $auth['id']; ?>'
         $.ajax({
             url:"app/ajax/api/busca-credenciais-tokens.php",
             method:"POST",
@@ -137,7 +132,6 @@
             cache:false,
                 success:function(response){
 
-                    console.log(response);
                     let data = JSON.parse(response);
 
                     if(data.id){
@@ -146,9 +140,6 @@
                     }else{
                         Swal.fire('Não encontrado','Tokens não encontrados anteriormente','warning');
                     }
-
-                    
-                    console.log(data);
                 },
                 error:function(error){
                     console.log(error);

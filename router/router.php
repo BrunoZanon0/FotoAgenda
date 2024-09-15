@@ -36,6 +36,7 @@ $router = new Router();
     $router->post('cadastrardata','dataCadastro@registraData');
     $router->post('atualizaChaveApi','configuracao@atualizaChaveApi');
 
+
 // PAGINA DE ERRO PADRAO
 
     $router->get('notfound','notfound@exit');

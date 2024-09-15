@@ -80,6 +80,10 @@
     .fc-col-header-cell-cushion {
         text-decoration: none;
     }
+
+    .cor_icon{
+        color:purple
+    }
 </style>
 <body>
     
@@ -97,7 +101,7 @@
 									<div class="col-12 col-lg-4 credenciais">
 										<div class="card shadow-none border radius-15">
 											<div class="card-body text-center">
-                                                <h2><i class="bi bi-cart-check"></i></h2>
+                                                <h2 class="cor_icon"><i class="bi bi-cart-check"></i></h2>
                                                 <h4>Credenciais</h4>
 											</div>
 										</div>
@@ -105,16 +109,16 @@
 									<div class="col-12 col-lg-4 autenticacao_tow_fac">
 										<div class="card shadow-none border radius-15">
 											<div class="card-body text-center">
-                                                <h2><i class="bi bi-check2-all"></i></h2>
+                                                <h2 class="cor_icon" ><i class="bi bi-check2-all"></i></h2>
 												<h4>Autenticação</h4>
 											</div>
 										</div>
 									</div>
-									<div class="col-12 col-lg-4">
+									<div class="col-12 col-lg-4 contrato_btn">
 										<div class="card shadow-none border radius-15">
 											<div class="card-body text-center">
-                                                <h2><i class="bi bi-person-circle"></i></h2>
-                                                <h4>Perfil</h4>
+                                                <h2 class="cor_icon"><i class="bi bi-folder-symlink-fill"></i></h2>
+                                                <h4>Contrato</h4>
 											</div>
 										</div>
 									</div>
@@ -159,6 +163,7 @@
     </div>
     <?php include_once __DIR__ . "/../modal/modal-credenciais-pagamento.php"; ?>
     <?php include_once __DIR__ . "/../modal/modal-autenticacao-email.php"; ?>
+    <?php include_once __DIR__ . "/../modal/modal_contrato_to_client.php"; ?>
 </body>
 </html>
 
@@ -176,5 +181,9 @@
 
     $(document).on("click", ".credenciais", function(e){
         $(document).trigger("start_modal_credenciais");
+    });
+
+    $(document).on("click", ".contrato_btn", function(e){
+        $(document).trigger("start_modal_contrato");
     });
 </script>
