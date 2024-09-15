@@ -1,5 +1,7 @@
 <?php 
 
+date_default_timezone_set('America/Fortaleza');
+
 include_once __DIR__ . "/../../db/connect/connect.php";
 
 class DatasModel{

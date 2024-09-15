@@ -1,7 +1,6 @@
 <?php
 
-include_once __DIR__ . "/../../model/userModel.php";
-include_once __DIR__ . "/../../model/emailModel.php";
+include_once __DIR__ . "/../../model/tokensModel.php";
 include_once __DIR__. "/../../utils/functions.php";
 
 try {
@@ -13,8 +12,8 @@ try {
     }
 
     $user_id        = $_POST['user_id'];
-    $pdoEmail       = new EmailModel();
-    $email_model    = $pdoEmail->ativar_verificacao_dois_fatores($user_id);
+    $pdoEmail       = new TokensModel();
+    $email_model    = $pdoEmail->desativar_pagamento_online($user_id);
     
 
     if($email_model){

@@ -116,17 +116,16 @@
                             processData: false,
                             contentType: false,
                                 success:function(response){
-                                    console.log(response);
-                                    // let data = JSON.parse(response);
+                                    let data = JSON.parse(response);
 
-                                    // if(data.status == 200){
-                                    //     Swal.fire('Sucesso',`${data.msg}`,'success')
-                                    //     .then(()=>{
-                                    //         window.location.reload();
-                                    //     })
-                                    // }else{
-                                    //     Swal.fire('Erro',`${data.msg}`,'error')
-                                    // }
+                                    if(data.status == 200){
+                                        Swal.fire('Sucesso',`${data.msg}`,'success')
+                                        .then(()=>{
+                                            window.location.reload();
+                                        })
+                                    }else{
+                                        Swal.fire('Erro',`${data.msg}`,'error')
+                                    }
                                 },
                                 error:function(error){
                                     console.log(error);

@@ -1,5 +1,7 @@
 <?php 
 
+date_default_timezone_set('America/Fortaleza');
+
 include_once __DIR__ . "/../../db/connect/connect.php";
 
 class TokensModel{
@@ -89,6 +91,86 @@ class TokensModel{
             return $retorno;
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
+        }
+    }
+
+    public function ativar_pagamento_online($user_id){
+
+        $retorno        = [];
+        $status         = 200;
+        $msg            = '';
+        $status_from_db = 1;
+
+        try {
+            $sql_insert = "UPDATE users SET
+                            pagamento_online = ? 
+                            WHERE id = ?
+                       ";
+
+            $sql_query = $this->conn->prepare($sql_insert);
+
+            $sql_query->bindParam(1,$status_from_db,PDO::PARAM_INT);
+            $sql_query->bindParam(2,$user_id,PDO::PARAM_INT);
+
+
+            if($sql_query->execute()){
+
+                $msg     = 'ok';
+
+                $retorno = [
+                    'status' => $status,
+                    'msg'    => $msg
+                ];
+            }
+        } catch (Exception $e) {
+            $status = 400;
+            $retorno = [
+                'status' => $status,
+                'msg'    => $e->getMessage(),
+            ];
+            
+        }finally{
+            return $retorno;
+        }
+    }
+
+    public function desativar_pagamento_online($user_id){
+
+        $retorno        = [];
+        $status         = 200;
+        $msg            = '';
+        $status_from_db = null;
+
+        try {
+            $sql_insert = "UPDATE users SET
+                            pagamento_online = ? 
+                            WHERE id = ?
+                       ";
+
+            $sql_query = $this->conn->prepare($sql_insert);
+
+            $sql_query->bindParam(1,$status_from_db,PDO::PARAM_INT);
+            $sql_query->bindParam(2,$user_id,PDO::PARAM_INT);
+
+
+            if($sql_query->execute()){
+
+                $msg     = 'ok';
+
+                $retorno = [
+                    'status' => $status,
+                    'msg'    => $msg
+                ];
+            }
+        } catch (Exception $e) {
+            $status = 400;
+            $retorno = [
+                'status' => $status,
+                'msg'    => $e->getMessage(),
+            ];
+            
+        }finally{
+            return $retorno;
         }
     }
 

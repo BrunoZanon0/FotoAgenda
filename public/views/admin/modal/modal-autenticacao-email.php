@@ -27,7 +27,6 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <h5 class="btn btn-info" type="button"> Mercado Pago</h5>
           <div class="page-wrapper">
             <div class="page-content">
                 <div class="card protected_page">

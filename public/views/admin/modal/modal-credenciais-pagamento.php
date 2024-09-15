@@ -27,13 +27,21 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <h5 class="btn btn-info" type="button"> Mercado Pago</h5>
-          <h6 class="text-center">Fique atento com relação aos campos</h6>
+
 
           <div class="page-wrapper">
             <div class="page-content">
-                <div class="card protected_page">
+                <div class="card protected_page ">
                     <div class="card-body">
+                        <div class="md-3 text-center">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input input_checkbox" type="checkbox" id="flexSwitchCheckChecked" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body card_body_tokens d-none">
+                    <h5 class="btn btn-info w-100" type="button"> Mercado Pago</h5>
+                    <h6 class="text-center">Fique atento com relação aos campos</h6>
                         <?php if($auth['permissao'] == 'admin'): ?>
                             <div class="md-3">
                                 <div class="row">
@@ -83,9 +91,63 @@
 </div>
 
 <script>
+
   
     $('.close_modal_agenda').on('click',function(){
         $("#modal_mostra_credenciais").modal("hide");
+    })
+
+    $('.input_checkbox').on('click',function(){
+        let checkbox    = $(this).is(':checked')
+        let id_usuario  = '<?= $auth['id']; ?>'
+        
+        if(checkbox){
+            $.ajax({
+            url:"app/ajax/api/user-ativar-pagamento_online.php",
+            method:"POST",
+            data:{
+                'user_id':id_usuario,
+            },
+            cache:false,
+                success:function(response){
+
+                    let data = JSON.parse(response);
+
+                    if(data.status == 200){
+                        $('.card_body_tokens').removeClass('d-none')
+                    }else{
+                        console.log(data.msg)
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            })
+
+        }else{
+            $.ajax({
+            url:"app/ajax/api/user-desativar-pagamento_online.php",
+            method:"POST",
+            data:{
+                'user_id':id_usuario,
+            },
+            cache:false,
+                success:function(response){
+
+                    let data = JSON.parse(response);
+
+                    if(data.status == 200){
+                        $('.card_body_tokens').addClass('d-none')
+                    }else{
+                        console.log(data.msg)
+                    }
+
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            })
+        }
     })
 
     $('.botao_finalizar').on('click',function(){
@@ -124,7 +186,16 @@
 
     $(document).on("start_modal_credenciais", function(){
         $("#modal_mostra_credenciais").modal("show");
-        let id_usuario        = '<?= $auth['id']; ?>'
+        let id_usuario          = '<?= $auth['id']; ?>'
+        let pagamento_online    = '<?= $auth['pagamento_online']; ?>'
+
+        if(pagamento_online){
+            $('.input_checkbox').attr('checked',true)
+            $('.card_body_tokens').removeClass('d-none')
+        }else{
+            $('.input_checkbox').attr('checked',false)
+        }
+
         $.ajax({
             url:"app/ajax/api/busca-credenciais-tokens.php",
             method:"POST",

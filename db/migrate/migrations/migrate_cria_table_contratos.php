@@ -2,7 +2,7 @@
 
 include_once __DIR__. "../../../connect/connect.php";
 
-class Migrate_cria_table_users {
+class Migrate_cria_table_contratos {
     public $conn;
 
     public function __construct() {
@@ -18,7 +18,7 @@ class Migrate_cria_table_users {
     }
 
     public function cria_table() {
-        $table_name = 'users';
+        $table_name = 'contratos';
 
         if ($this->tableExists($table_name)) {
             echo "A tabela '$table_name' já existe. Pulei a criação.\n";
@@ -27,19 +27,12 @@ class Migrate_cria_table_users {
 
         $sql_table = "CREATE TABLE $table_name (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            id_key INT,
-            permissao VARCHAR(30),
-            pagamento_online int,
-            name VARCHAR(50),
-            email VARCHAR(100),
-            password VARCHAR(250),
-            cpf VARCHAR(30),
-            token VARCHAR(30),
-            fotografo INT,
-            verificacao_two_fac INT,
-            celular VARCHAR(30),
+            user_id INT,
+            status VARCHAR(30),
+            nome VARCHAR(250),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            deleted_at TIMESTAMP NULL DEFAULT NULL
+            deleted_at TIMESTAMP NULL DEFAULT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)   
         )";
 
         try {
@@ -55,7 +48,7 @@ class Migrate_cria_table_users {
     }
 }
 
-$cria_migrete = new Migrate_cria_table_users();
+$cria_migrete = new Migrate_cria_table_contratos();
 $cria_migrete->cria_table();
 
 ?>
