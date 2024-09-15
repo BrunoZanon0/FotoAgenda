@@ -8,17 +8,21 @@
 
 include_once __DIR__ ."/../../app/utils/auxiliares.php";
 include_once __DIR__ . "/../model/userModel.php";
+include_once __DIR__ . "/../model/contratoModel.php";
 include_once __DIR__ . "/../model/tokensModel.php";
 
 class ConfiguracaoController{
         public $auth;
         public $conn;
         public $tokenApi;
+        public $contratos;
     public function __construct() {
         $user       = new User($_SESSION['id']);
         $this->auth = $user->Auth();
 
         $this->tokenApi = new TokensModel();
+        $this->contratos  = new ContratoModel();
+
     }
 
     public function atualizaChaveApi(){
@@ -45,7 +49,8 @@ class ConfiguracaoController{
         }
     }
     public function render(){
-        $auth = $this->auth;
+        $auth           = $this->auth;
+        $info_contrato  = $this->contratos->get_one_contract($auth['id']);
         include_once __DIR__ . "/../../public/views/admin/config/configuracao.php";
     }
 

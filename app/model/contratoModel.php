@@ -49,8 +49,24 @@ class ContratoModel{
 
             return $retorno;
         }
+    }
 
+    public function get_one_contract($user_id){
         
+        $status = 'ativo';
+        $sql_contract = "SELECT * FROM $this->table WHERE user_id = ? AND status = ?";
+        $sql_query    = $this->conn->prepare($sql_contract);
+
+        $sql_query->bindParam(1,$user_id,PDO::PARAM_INT);
+        $sql_query->bindParam(2,$status,PDO::PARAM_STR);
+
+        $result = [];
+
+        if($sql_query->execute()){
+            $result = $sql_query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return $result;
     }
 
     public function remove_all_contracts($user_id){

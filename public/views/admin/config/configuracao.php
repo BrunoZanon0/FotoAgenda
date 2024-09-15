@@ -128,28 +128,42 @@
 								<div class="table-responsive mt-3">
 									<table class="table table-striped table-hover table-sm mb-0">
 										<thead>
-											<tr>
+											<tr class="text-center">
 												<th>Evento <i class="bx bx-up-arrow-alt ms-2"></i>
 												</th>
-												<th>Data</th>
-												<th>Horário</th>
-												<th></th>
+												<th>Nome</th>
+												<th>Upload</th>
+												<th>Status</th>
+												<th>Ações</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>
-													<div class="d-flex align-items-center">
-														<div><i class="bx bxs-file-doc me-2 font-24 text-success"></i>
-														</div>
-														<div class="font-weight-bold text-success">15 anos da Mirella Zanon</div>
-													</div>
-												</td>
-												<td>17/09/1996</td>
-												<td>19h - 22h</td>
-												<td><i class="bx bx-dots-horizontal-rounded font-24"></i>
-												</td>
-											</tr>
+                                            <?php foreach($info_contrato as $informacoes): 
+
+                                                $created_at = $informacoes['created_at'];
+                                                $date       = new DateTime($created_at);
+                                                $data       = $date->format('H:i:s d/m/Y');
+                                                $nome       = base64_decode($informacoes['nome']);
+
+                                                ?>
+                                                <tr class="text-center">
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div><i class="bx bxs-file-doc me-2 font-24 text-success"></i>
+                                                            </div>
+                                                            <div class="font-weight-bold text-success">Contrato</div>
+                                                        </div>
+                                                    </td>
+                                                    <td><?= $nome ?></td>
+                                                    <td><?= $data ?></td>
+                                                    <td><?= $informacoes['status'] ?></td>
+                                                    <td>
+                                                    <a target="_blank" href="public/app/contratos/<?= $auth['id'] . '-' . urlencode($informacoes['nome']) ?>" class="btn btn-info">
+                                                            <i class="bi bi-aspect-ratio"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach ?>
 										</tbody>
 									</table>
 								</div>
@@ -186,4 +200,5 @@
     $(document).on("click", ".contrato_btn", function(e){
         $(document).trigger("start_modal_contrato");
     });
+
 </script>
