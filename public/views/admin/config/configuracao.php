@@ -148,17 +148,13 @@
                                                 ?>
                                                 <tr class="text-center">
                                                     <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <div><i class="bx bxs-file-doc me-2 font-24 text-success"></i>
-                                                            </div>
-                                                            <div class="font-weight-bold text-success">Contrato</div>
-                                                        </div>
+                                                        <h6 class="font-weight-bold text-success text-center">Contrato</h6>
                                                     </td>
                                                     <td><?= $nome ?></td>
                                                     <td><?= $data ?></td>
                                                     <td><?= $informacoes['status'] ?></td>
                                                     <td>
-                                                    <a target="_blank" href="public/app/contratos/<?= $auth['id'] . '-' . urlencode($informacoes['nome']) ?>" class="btn btn-info">
+                                                    <a target="_blank" href="public/app/contratos/<?= $auth['id'] . '-' . urlencode($informacoes['nome']) ?>" class="btn btn-warning">
                                                             <i class="bi bi-aspect-ratio"></i>
                                                         </a>
                                                     </td>

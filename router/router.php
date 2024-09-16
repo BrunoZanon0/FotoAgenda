@@ -20,7 +20,7 @@ $router = new Router();
     // POST -> rotas
 
     $router->post('cadastrarFotografo','cadastro@cadastra');
-    $router->post('cadastrarUsuario','cadastro@cadastrarUsuario');
+    $router->post('cadastrarEvento','cadastro@cadastrarEvento');
     $router->post('login', 'login@logando');
 
 // AUTENTICADOS -> rotas // só entra se estiver logado do contrario volta para o home@index

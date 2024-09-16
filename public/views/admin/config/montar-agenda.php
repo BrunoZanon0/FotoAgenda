@@ -2,7 +2,7 @@
     if(!isset($auth) || empty($auth)){
         session_start();
         $_SESSION['erro'] = "Você não está logado!";
-        header("location: http://localhost:9090/servicos/FotoAgendaDev/FotoAgenda/");
+        header("location: login");
         exit();
     }
 ?>
@@ -78,93 +78,11 @@
             <div class="card protected_page">
                 <?php include_once __DIR__ . "/../../../layouts/menu.php"; ?>
                 <div class="card-body">
-                <div class="row">
-					<div class="col-12 col-lg-3">
+                <div class="row ">
+					<div class="col-12 ">
 						<div class="card">
 							<div class="card-body">
-								<div class="d-grid"> <button class="btn btn-primary btn_modal_agenda">Montagem</button>
-								</div>
-								<h5 class="my-3">Menu</h5>
-								<div class="fm-menu">
-									<div class="list-group list-group-flush"> 
-										<button class="list-group-item py-1" style="text-align: left;"><i class="bx bx-beer me-2"></i><span>Zip Files</span></button>
-										<button class="list-group-item py-1" style="text-align: left;"><i class="bx bx-beer me-2"></i><span>Zip Files</span></button>
-										<button class="list-group-item py-1" style="text-align: left;"><i class="bx bx-beer me-2"></i><span>Zip Files</span></button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-lg-9">
-						<div class="card">
-							<div class="card-body">
-								<div class="row mt-3">
-									<div class="col-12 col-lg-4">
-										<div class="card shadow-none border radius-15">
-											<div class="card-body">
-												<h5 class="mt-3 mb-0">Clientes</h5>
-												<p class="mb-1 mt-4"><span>35</span>  <span class="float-end">50/ Mês</span>
-												</p>
-												<div class="progress h-7">
-													<div class="progress-bar bg-primary w-50" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-12 col-lg-4">
-										<div class="card shadow-none border radius-15">
-											<div class="card-body">
-												<h5 class="mt-3 mb-0">Ensaios</h5>
-												<p class="mb-1 mt-4"><span>45</span>  <span class="float-end">60 / Mês</span>
-												</p>
-												<div class="progress h-7">
-													<div class="progress-bar bg-danger w-50" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-12 col-lg-4">
-										<div class="card shadow-none border radius-15">
-											<div class="card-body">
-												<h5 class="mt-3 mb-0">Financeiro</h5>
-												<p class="mb-1 mt-4"><span>R$ 6.451,20</span>  <span class="float-end">R$ 10.000,00 / Mês</span>
-												</p>
-												<div class="progress h-7">
-													<div class="progress-bar bg-success w-50" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!--end row-->
-								<!--end row-->
-								<div class="table-responsive mt-3">
-									<table class="table table-striped table-hover table-sm mb-0">
-										<thead>
-											<tr>
-												<th>Evento <i class="bx bx-up-arrow-alt ms-2"></i>
-												</th>
-												<th>Data</th>
-												<th>Horário</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<div class="d-flex align-items-center">
-														<div><i class="bx bxs-file-doc me-2 font-24 text-success"></i>
-														</div>
-														<div class="font-weight-bold text-success">15 anos da Mirella Zanon</div>
-													</div>
-												</td>
-												<td>17/09/1996</td>
-												<td>19h - 22h</td>
-												<td><i class="bx bx-dots-horizontal-rounded font-24"></i>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+								<div class="d-grid"> <button class="btn btn-primary btn_modal_agenda"><i class="bi bi-calendar-check"></i> Montagem</button>
 								</div>
 							</div>
 						</div>

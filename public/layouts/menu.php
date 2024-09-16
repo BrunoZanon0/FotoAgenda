@@ -9,10 +9,15 @@
         border:none;
         border-radius: 0;
     }
+
+    .navegacao_menu{
+        background-image: linear-gradient(120deg, black 70%, purple, orange);
+    }
+
 </style>
 
 <div class="card-body menuzinho" >
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-radius: 0;" >
+    <nav class="navbar navbar-expand-lg navbar-dark navegacao_menu" style="border-radius: 0;" >
         <div class="container-fluid" >	<a class="navbar-brand" href="dashboard"><?= $auth['name'] ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent3" aria-controls="navbarSupportedContent3" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
             </button>

@@ -22,13 +22,6 @@ $auth = $busca_user->Auth();
 
 ?>
 
-
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
-  <script>
-    const mp = new MercadoPago("TEST-c80d6330-0600-4afb-91b4-1c37d1496c51");
-  </script>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -87,7 +80,7 @@ $auth = $busca_user->Auth();
     <div class="imagem_background">
     </div>
     <div class="container card p-3">
-        <form id="myForm" method="post" action="cadastrarUsuario" class="form-container">
+        <form id="myForm" method="post" action="cadastrarEvento" class="form-container">
             <h4 class="font-weight-light text-center">Cadastrar dados</h4>
             <br>
             <div class="step step-1 active">
@@ -96,12 +89,6 @@ $auth = $busca_user->Auth();
                 </div>
                 <div class="mb-3">
                     <input class="form-control valida" required placeholder="Digite seu email" type="email" name="email" id="login">
-                </div>
-                <div class="mb-3">
-                    <input class="form-control valida" required placeholder="Digite sua senha" type="password" name="senha" id="password">
-                </div>
-                <div class="mb-3">
-                    <input class="form-control valida" required placeholder="Digite sua senha novamente" type="password" name="senha2" id="password2">
                 </div>
                 <div class="mb-3">
                     <input class="form-control valida" required placeholder="CPF" type="text" name="cpf" id="cpf">
@@ -122,11 +109,11 @@ $auth = $busca_user->Auth();
                     <input class="form-control valida endereco_input" required placeholder="Endereço do evento" type="text" name="endereco" id="endereco">
                 </div>
                 <div class="mb-3">
-                    <input class="form-control valida" required placeholder="Numero da casa de Evento / Sitio / Casa / APT " type="numero_casa" name="numero_casa" id="numero_casa">
+                    <input class="form-control valida numero_casa" required placeholder="Numero da casa de Evento / Sitio / Casa / APT " type="numero_casa" name="numero_casa" id="numero_casa">
                 </div>
                 <div class="mb-3">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 mb-3">
                             <input class="form-control cep_search_input"  placeholder="CEP do evento" type="number" name="cep" id="cep">
                         </div>
                         <div class="col-12">
@@ -156,7 +143,7 @@ $auth = $busca_user->Auth();
                 <div class="mb-3">
                     <input class="form-control" placeholder="Entrada?" onkeypress="return(moeda(this))" type="text" name="valor_entrada" id="valor_entrada">
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <input class="form-control card_number"  required placeholder="Card Number" type="text" name="card_number" id="card_number">
                 </div>
                 <div class="mb-3">
@@ -168,9 +155,9 @@ $auth = $busca_user->Auth();
                             <input class="form-control" required placeholder="Código EX: 123" maxlength="3" type="text" name="card_cod" id="card_cod">
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="mb-3">
-                    <input type="checkbox" name="valor_entrada" id="aceite">
+                    <input type="checkbox" name="aceite_termos" id="aceite">
                     <label for="aceite">Aceita todos os termos de transição</label>
                 </div>
                 <input type="hidden" name="recaptcha_token" id="recaptchaToken">
@@ -181,6 +168,7 @@ $auth = $busca_user->Auth();
                     <button type="button" class="btn btn-success btn_enviar">Enviar</button>
                 </div>
             </div>
+            <input type="hidden" name="data_selecionada" class="verifica_data data_selecionada">
             <br>
             <div class="text-center font-weight-light">
                 <h6>Criado por <a class="font-weight-light text-center" href="https://www.zanontech.com.br" target="_blank">zanontech</a></h6>
@@ -205,7 +193,7 @@ $auth = $busca_user->Auth();
         $('.btn_enviar').on('click',function(){
             let inputs = $('.valida');
             let valida = true;
-            let horarios = $('input[name=data_escolhida]')
+            let horarios = $('input[name=hora_escolhida]')
 
             if(!horarios.length){
                 Swal.fire('Erro','É necessário selecionar os horarios');
@@ -227,24 +215,24 @@ $auth = $busca_user->Auth();
 
                 return valida;
             });
-
-
             
-            // if(valida){
-            //     document.querySelector('#myForm').submit();
-            // }
+            if(valida){
+                document.querySelector('#myForm').submit();
+            }
         })
 
         $('.select_evento').on('change',function(){
             if($(this).val() == 'ensaio'){
                 $('.endereco_input').attr('disabled',true)
                 $('.cep_search_input').attr('disabled',true)
+                $('.numero_casa').attr('disabled',true);
                 $('.endereco_input').val('Estudio fotografico do(a) fotografo(a)')
                 $('.cep_search_input').val('000000000')
                 $('.search_cep').hide();
             }else{
                 $('.endereco_input').attr('disabled',false)
                 $('.endereco_input').val('')
+                $('.numero_casa').attr('disabled',false);
                 $('.cep_search_input').attr('disabled',false)
                 $('.cep_search_input').val('')
                 $('.search_cep').show();
@@ -296,7 +284,7 @@ $auth = $busca_user->Auth();
             return (key >= 48 && key <= 57) || key === 32;
         }
 
-        document.getElementById('card_number').addEventListener('input', card_model);
+        // document.getElementById('card_number').addEventListener('input', card_model);
     });
 
     let currentStep = 0;
@@ -352,6 +340,9 @@ $auth = $busca_user->Auth();
             return;
         }
 
+        $('.data_selecionada').val(data_selecao)
+
+
         $.ajax({
             url:'app/ajax/datas/data-do-dia-e-horarios.php',
             method:'POST',
@@ -376,7 +367,7 @@ $auth = $busca_user->Auth();
                             const [hora, minuto] = diaInfos.hora_disponivel.split(':');
                             divHorarios.append(`
                             <span class='btn btn-success'>
-                                    <input required class="form-check-input" type="radio" name="data_escolhida" id="data_id_${diaInfos.id}">
+                                    <input required class="form-check-input" type="radio" value="${diaInfos.id}" name="hora_escolhida" id="data_id_${diaInfos.id}">
                                 <label class="form-check-label" for="data_id_${diaInfos.id}">${hora}:${minuto}</label>
                             </span>
                         `)
