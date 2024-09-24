@@ -121,9 +121,12 @@ class CadastroController{
         $responseData = json_decode($response, true);
 
         if($responseData['success']){
-            $valor_entrada = '';
-
-            dd($_POST);
+            $valor_entrada  = '';
+            $cep            = '';
+            
+            if(!isset($_POST['id_usuario'])          || empty($_POST['id_usuario'])){
+                $this->retorna_front_msg('id_usuario é obrigatório','erro');
+            }
 
             if(!isset($_POST['email'])          || empty($_POST['email'])){
                 $this->retorna_front_msg('Email é obrigatório','erro');
@@ -157,6 +160,10 @@ class CadastroController{
                 $this->retorna_front_msg('É necessário enviar a data para cadastro','erro');
             }
 
+            if(isset($_POST['cpf']) && !empty($_POST['cpf'])){
+                $cpf = $_POST['cpf'];
+            }
+
             if(isset($_POST['valor_entrada']) && !empty($_POST['valor_entrada'])){
                 $valor_entrada = $_POST['valor_entrada'];
             }
@@ -169,9 +176,58 @@ class CadastroController{
             $valor_total        = $_POST['valor_total'];
             $aceite_termos      = $_POST['aceite_termos'];
             $data_selecionada   = $_POST['data_selecionada'];
+            $id_usuario         = $_POST['id_usuario'];
 
+            $array_to_insert = [
+                'email'             => $email,
+                'cpf'               => $cpf,
+                'endereco'          => $endereco,
+                'numero_casa'       => $numero_casa,
+                'hora_id'           => $hora_id,
+                'valor_total'       => $valor_total,
+                'aceite_termos'     => $aceite_termos,
+                'data_selecionada'  => $data_selecionada,
+                'valor_entrada'     => $valor_entrada,
+                'id_usuario'        => $id_usuario,
+                'cep'               => $cep,
+                'status'            => 'pendente',
+                'aceite'            => '0'
+            ];
 
+            $sql_insert_data = "INSERT INTO data_cadastro 
+                            (
+                                user_id,
+                                status,
+                                data_solicitado,
+                                hora_solicitado_id,
+                                email_cliente,
+                                endereco,
+                                numero_casa,
+                                valor_total,
+                                valor_entrada,
+                                cep
+                            )VALUES(
+                                ?,?,?,?,?,?,?,?,?,?
+                            )";
 
+            $stmt = $this->conn->prepare($sql_insert_data);
+
+            $stmt->bindParam(1,$array_to_insert['id_usuario'],PDO::PARAM_INT);
+            $stmt->bindParam(2,$array_to_insert['status'],PDO::PARAM_STR);
+            $stmt->bindParam(3,$array_to_insert['data_selecionada'],PDO::PARAM_STR);
+            $stmt->bindParam(4,$array_to_insert['hora_id'],PDO::PARAM_INT);
+            $stmt->bindParam(5,$array_to_insert['email'],PDO::PARAM_STR);
+            $stmt->bindParam(6,$array_to_insert['endereco'],PDO::PARAM_STR);
+            $stmt->bindParam(7,$array_to_insert['numero_casa'],PDO::PARAM_INT);
+            $stmt->bindParam(8,$array_to_insert['valor_total'],PDO::PARAM_STR);
+            $stmt->bindParam(9,$array_to_insert['valor_entrada'],PDO::PARAM_STR);
+            $stmt->bindParam(10,$array_to_insert['cep'],PDO::PARAM_STR);
+
+            if($stmt->execute()){
+                $this->retorna_front_msg('Horario cadastrado, está com o status pendente!','success');
+            }else{
+                var_dump($stmt->errorInfo());
+            }
         }else{
             $this->retorna_front_msg('Validação do recaptcha é obrigatorio!','erro');
         }

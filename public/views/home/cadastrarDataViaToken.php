@@ -87,6 +87,7 @@ $auth = $busca_user->Auth();
                 <div class="mb-3">
                     <input class="form-control valida" value="Fotografo(a): <?= $auth['name'] ?>" disabled type="text" name="name">
                 </div>
+                <input type="hidden" name="id_usuario" value="<?= $auth['id'] ?>">
                 <div class="mb-3">
                     <input class="form-control valida" required placeholder="Digite seu email" type="email" name="email" id="login">
                 </div>
